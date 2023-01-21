@@ -1,5 +1,5 @@
 import express,{Request,Response} from "express";
-import { currentUserRouter } from "./routes/current-user";
+import { currentUserRouter } from "./routes/currentuser";
 import { signinRouter } from "./routes/signin";
 import { signoutRouter } from "./routes/signout";
 import { signupRouter } from "./routes/signup";
