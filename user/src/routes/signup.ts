@@ -1,5 +1,4 @@
 import express, { Request, Response } from 'express';
-require('express-async-errors');
 import { body } from 'express-validator';
 import { Gender, User, UserAttrs } from '../models/user';
 import { BadRequestError, validateRequest } from '@karkaushal/common';
@@ -34,7 +33,7 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { email, password, name, gender, age, shippingAddress }: UserAttrs =
+    const { email, password, name, gender, age, shippingAddress ,isAdmin}: UserAttrs =
       req.body;
 
     const existingUser = await User.findOne({ email });
@@ -50,6 +49,7 @@ router.post(
       gender,
       age,
       shippingAddress,
+      isAdmin
     });
     await user.save();
 

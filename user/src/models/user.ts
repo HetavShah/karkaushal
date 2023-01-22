@@ -21,7 +21,7 @@ export enum Gender {
 export interface UserAttrs {
   email: string;
   password: string;
-  isAdmin?: boolean;
+  isAdmin: boolean;
   name: string;
   gender: Gender;
   age: number;
@@ -39,7 +39,7 @@ interface UserModel extends mongoose.Model<UserDoc> {
 interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
-  isAdmin?: boolean;
+  isAdmin: boolean;
   name: string;
   gender: Gender;
   age: number;
@@ -61,6 +61,7 @@ const userSchema = new mongoose.Schema(
     isAdmin: {
       type: Boolean,
       default: false,
+      required:true
     },
     name: {
       type: String,

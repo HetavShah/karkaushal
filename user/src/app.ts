@@ -1,11 +1,11 @@
 import express, { Request, Response } from 'express';
+import 'express-async-errors';
 import { currentUserRouter } from './routes/currentuser';
 import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
 import { errorHandler } from '@karkaushal/common';
 import cookieSession from 'cookie-session';
-import 'express-async-errors';
 const app = express();
 
 app.use(express.json());
