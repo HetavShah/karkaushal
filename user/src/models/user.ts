@@ -13,7 +13,7 @@ export interface ShippingAddressAttrs {
 
 
 // gender must be one of  the following enum values
-enum Gender {
+export enum Gender {
   Male = 'male',
   Female = 'female',
   Other = 'other',
@@ -21,7 +21,7 @@ enum Gender {
 export interface UserAttrs {
   email: string;
   password: string;
-  isAdmin: boolean;
+  isAdmin?: boolean;
   name: string;
   gender: Gender;
   age: number;
@@ -39,7 +39,7 @@ interface UserModel extends mongoose.Model<UserDoc> {
 interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
-  isAdmin: boolean;
+  isAdmin?: boolean;
   name: string;
   gender: Gender;
   age: number;
@@ -60,7 +60,6 @@ const userSchema = new mongoose.Schema(
     },
     isAdmin: {
       type: Boolean,
-      required: true,
       default: false,
     },
     name: {

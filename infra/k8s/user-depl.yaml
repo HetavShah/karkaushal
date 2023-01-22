@@ -15,6 +15,14 @@ spec:
       containers:
       - name: user
         image: hetavshah/user
+        env:
+          - name: MONGO_URI
+            value: 'mongodb://user-mongo-srv:27017/user'
+          - name: JWT_KEY
+            valueFrom:
+              secretKeyRef:
+                name: jwt-secret
+                key: JWT_KEY
 ---
 
 apiVersion: v1
