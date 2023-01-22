@@ -4,7 +4,7 @@ import request from "supertest";
 import { app } from "../app";
 
 declare global {
-  var signin: () => Promise<string[]>;
+  var signup: (email?:string,password?:string) => Promise<string[]>;
 }
 jest.setTimeout(10000);
 let mongo: any;
@@ -33,15 +33,12 @@ afterAll(async () => {
 });
 
 // a signin function used for the testing of routes which needs authentication
-global.signin = async () => {
-  const email = "test@test.com";
-  const password = "password";
-
+global.signup = async (email?:string,password?:string) => {
   const response = await request(app)
     .post("/api/users/signup")
     .send({
-      email,
-      password,
+      email:email|| 'test@test.com',
+      password:password|| 'password',
       name: "user",
       gender: "male",
       age: 65,
