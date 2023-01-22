@@ -29,12 +29,18 @@ router.post(
       .not()
       .isEmpty()
       .withMessage('Age is not valid'),
-
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { email, password, name, gender, age, shippingAddress ,isAdmin}: UserAttrs =
-      req.body;
+    const {
+      email,
+      password,
+      name,
+      gender,
+      age,
+      shippingAddress,
+      isAdmin,
+    }: UserAttrs = req.body;
 
     const existingUser = await User.findOne({ email });
 
@@ -49,7 +55,7 @@ router.post(
       gender,
       age,
       shippingAddress,
-      isAdmin
+      isAdmin,
     });
     await user.save();
 

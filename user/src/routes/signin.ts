@@ -45,11 +45,7 @@ router.post(
         shippingAddress: existingUser.shippingAddress,
       },
       process.env.JWT_KEY!
-    );
-    req.session = {
-      jwt: useJWT,
-    };
-
+    )
     // Store it on session object
     req.session = {
       jwt: useJWT,

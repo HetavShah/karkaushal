@@ -8,8 +8,7 @@ export interface ShippingAddressAttrs {
   country: string;
 }
 
-// An interface that describes the properties
-// that are requried to create a new User
+
 
 
 // gender must be one of  the following enum values
@@ -18,6 +17,8 @@ export enum Gender {
   Female = 'female',
   Other = 'other',
 }
+// An interface that describes the properties
+// that are requried to create a new User
 export interface UserAttrs {
   email: string;
   password: string;

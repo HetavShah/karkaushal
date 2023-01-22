@@ -6,22 +6,35 @@ import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
 import { errorHandler } from '@karkaushal/common';
 import cookieSession from 'cookie-session';
+import { updateUserRouter } from './routes/updateuser';
+import { getUserRouter } from './routes/getuser';
+import { deleteUserRouter } from './routes/deleteuser';
+
 const app = express();
+
+app.set('trust proxy',true);
 
 app.use(express.json());
 
-app.use(currentUserRouter);
-app.use(signinRouter);
-app.use(signupRouter);
-app.use(signoutRouter);
 app.use(
   cookieSession({
     signed: false,
     secure: process.env.NODE_ENV !== 'test',
   })
 );
+
+
+app.use(currentUserRouter);
+app.use(signinRouter);
+app.use(signupRouter);
+app.use(signoutRouter);
+app.use(updateUserRouter);
+app.use(getUserRouter);
+app.use(deleteUserRouter);
+
+
 app.all('*', async (req: Request, res: Response) => {
-  res.status(404).send('Not Found');
+  res.status(404).send({message:'Not Found'});
 });
 
 app.use(errorHandler);
