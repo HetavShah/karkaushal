@@ -6,7 +6,7 @@ import { app } from "../app";
 declare global {
   var signin: () => Promise<string[]>;
 }
-
+jest.setTimeout(10000);
 let mongo: any;
 // Before running all the test connect to mongo memory server
 beforeAll(async () => {

@@ -7,6 +7,13 @@
     "start": "ts-node-dev --poll src/index.ts",
     "test": "jest --watchAll --runInBand --detectOpenHandles --no-cache"
   },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "./src/test/setup.ts"
+    ]
+  },
   "dependencies": {
     "@karkaushal/common": "^1.0.3",
     "@types/cookie-session": "^2.0.44",
@@ -28,7 +35,7 @@
     "@types/supertest": "^2.0.12",
     "mongodb-memory-server": "^8.10.2",
     "supertest": "^6.3.3",
-    "ts-jest": "^29.0.3"
+    "ts-jest": "^29.0.5"
   },
   "keywords": [],
   "author": "",
