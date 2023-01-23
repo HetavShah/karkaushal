@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.delete(
   "/api/users/:userId",
-  [param("userId").isMongoId().withMessage("Invalid MongoDB ObjectId")],
+  [param("userId").isMongoId().withMessage("Invalid Id")],
   currentUser,requireAuth,
   validateRequest,
   async (req: Request, res: Response) => {

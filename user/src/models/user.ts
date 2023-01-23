@@ -8,9 +8,6 @@ export interface ShippingAddressAttrs {
   country: string;
 }
 
-
-
-
 // gender must be one of  the following enum values
 export enum Gender {
   Male = 'male',
@@ -22,11 +19,14 @@ export enum Gender {
 export interface UserAttrs {
   email: string;
   password: string;
-  isAdmin: boolean;
+  isSeller: boolean;
   name: string;
   gender: Gender;
   age: number;
   shippingAddress?: ShippingAddressAttrs;
+  pehchanCardNo?:string;
+  shopAddress?:string;
+  website?:string;
 }
 
 // An interface that describes the properties that a user Model has
@@ -40,12 +40,15 @@ interface UserModel extends mongoose.Model<UserDoc> {
 interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
-  isAdmin: boolean;
+  isSeller: boolean;
   name: string;
   gender: Gender;
   age: number;
   shippingAddress?: ShippingAddressAttrs;
   version: number;
+  pehchanCardNo?:string;
+  shopAddress?:string;
+  website?:string;
 }
 
 const userSchema = new mongoose.Schema(
@@ -59,10 +62,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    isAdmin: {
+    isSeller: {
       type: Boolean,
       default: false,
-      required:true
+      required: true,
     },
     name: {
       type: String,
@@ -83,6 +86,12 @@ const userSchema = new mongoose.Schema(
       postalCode: { type: String },
       country: { type: String },
     },
+    pehchanCardNo:{
+      type: String,
+      unique: true,
+    },
+    shopAddress:{type: String},
+    website:{type:String}
   },
   {
     toJSON: {

@@ -23,12 +23,20 @@ router.post(
         return Object.values(Gender).includes(value);
       })
       .withMessage("Gender must be one of 'male' , 'female' , 'other'  "),
-
     body('age')
       .isInt({ gt: 0, lt: 150 })
       .not()
       .isEmpty()
       .withMessage('Age is not valid'),
+    body('pehchanCardNo')
+    .if(body('isSeller').custom(value=>{return value}))
+       .not().isEmpty()
+       .withMessage('Pehchan Card No is Required'),
+    body('shopAddress')
+    .if(body('isSeller').custom(value=>{return value}))
+    .not().isEmpty()
+    .withMessage('Shop Address is Required'),
+
   ],
   validateRequest,
   async (req: Request, res: Response) => {
@@ -39,24 +47,48 @@ router.post(
       gender,
       age,
       shippingAddress,
-      isAdmin,
+      isSeller,
+      pehchanCardNo,
+      shopAddress,
+      website
     }: UserAttrs = req.body;
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({
+      $or:[{ email },{pehchanCardNo}]
+    });
 
     if (existingUser) {
-      throw new BadRequestError('Email Already Exists');
+      throw new BadRequestError('User Already Exists');
     }
+    let user;
+      if(!isSeller)
+      {
+        user = User.build({
+          email,
+          password,
+          name,
+          gender,
+          age,
+          shippingAddress,
+          isSeller,
+        });
+      }
+      else
+      {
+        user = User.build({
+          email,
+          password,
+          name,
+          gender,
+          age,
+          shopAddress,
+          website,
+          pehchanCardNo,
+          isSeller,
+        });
 
-    const user = User.build({
-      email,
-      password,
-      name,
-      gender,
-      age,
-      shippingAddress,
-      isAdmin,
-    });
+      }
+   
     await user.save();
 
     // Generate token

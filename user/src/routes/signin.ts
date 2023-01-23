@@ -38,7 +38,7 @@ router.post(
       {
         id: existingUser.id,
         email: existingUser.email,
-        isAdmin: existingUser.isAdmin,
+        isSeller: existingUser.isSeller,
         name: existingUser.name,
         gender: existingUser.gender,
         age: existingUser.age,
