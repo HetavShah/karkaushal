@@ -1,3 +1,3 @@
 export default () => {
-  return <h1>Het Shah Jay Pirimid vada</h1>;
+  return <h1>Het Shah</h1>;
 };
