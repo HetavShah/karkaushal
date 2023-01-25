@@ -24,3 +24,11 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: hetavshah/products
+      context: products
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
