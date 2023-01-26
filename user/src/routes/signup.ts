@@ -90,12 +90,14 @@ router.post(
       }
    
     await user.save();
+    // console.log(user.isSeller);
 
     // Generate token
     const useJWT = jwt.sign(
       {
         id: user.id,
         email: user.email,
+        isSeller:user.isSeller,
       },
       process.env.JWT_KEY!
     );
