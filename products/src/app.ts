@@ -2,7 +2,7 @@ import express from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
 import { errorHandler, NotFoundError, currentUser } from '@karkaushal/common';
-import { createProductRouter } from './routes/product-create';
+import { createProductRouter } from './routes/create-product';
 import { getAllProductsRouter } from './routes/get-all-products';
 
 const app = express();
