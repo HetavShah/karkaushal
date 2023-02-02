@@ -9,11 +9,11 @@ import cookieSession from 'cookie-session';
 import { updateUserRouter } from './routes/updateuser';
 import { getUserRouter } from './routes/getuser';
 import { deleteUserRouter } from './routes/deleteuser';
-
+import helmet from 'helmet';
 const app = express();
 
 app.set('trust proxy',true);
-
+app.use(helmet());
 app.use(express.json());
 
 app.use(

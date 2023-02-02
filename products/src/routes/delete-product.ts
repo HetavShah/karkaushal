@@ -7,7 +7,8 @@ import {
   validateRequest,
   NotAuthorizedError
 } from "@karkaushal/common";
-
+import { ProductDeletedPublisher } from "../events/publishers/product-deleted-publisher";
+import { natsWrapper } from "../../NatsWrapper";
 import { Product } from "../models/product";
 
 const router = express.Router();
@@ -33,6 +34,10 @@ router.delete(
     
 
     await deletedProduct.remove();
+    new ProductDeletedPublisher(natsWrapper.client).publish({
+      id: deletedProduct.id,
+      version: deletedProduct.version
+    })
 
     res.status(200).send({
       message: "Product deleted successfully"

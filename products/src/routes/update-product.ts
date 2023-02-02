@@ -3,12 +3,14 @@ import { body,param } from "express-validator";
 import { sellerOnly, requireAuth, validateRequest, NotFoundError, NotAuthorizedError } from "@karkaushal/common";
 import { Product } from "../models/product";
 import type { ProductAttrs } from "../models/types/product";
-
+import { natsWrapper } from "../../NatsWrapper";
+import { ProductUpdatedPublisher } from "../events/publishers/product-updated-publisher";
 const router = express.Router();
 
 
 // TODO appy rate-limit functionality 
 // TODO seller should only be allowed to change the price if the product is not reserved
+
 router.patch(
   "/api/products/:id",
   requireAuth,sellerOnly,
@@ -39,7 +41,7 @@ router.patch(
       description,
       countInStock,
     }: ProductAttrs = req.body;
-
+    
     const product = await Product.findById(req.params.id);
 
     if (!product) {
@@ -60,6 +62,19 @@ router.patch(
     product.description = description ?? product.description;
     product.countInStock = countInStock ?? product.countInStock;
     await product.save();
+    new ProductUpdatedPublisher(natsWrapper.client).publish({
+      title:product.title,
+      price:product.price,
+      images:product.images,
+      colors:product.colors,
+      sizes:product.sizes,
+      brand:product.brand,
+      category:product.category,
+      material:product.material,
+      description:product.description,
+      countInStock:product.countInStock,
+      userId:product.userId
+    });
     res.status(201).send(product);
   }
 );

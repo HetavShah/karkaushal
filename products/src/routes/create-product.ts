@@ -3,9 +3,9 @@ import { body } from "express-validator";
 import { sellerOnly, requireAuth, validateRequest } from "@karkaushal/common";
 import { Product } from "../models/product";
 import type { ProductAttrs } from "../models/types/product";
-
+import { ProductCreatedPublisher } from "../events/publishers/product-created-publisher";
 const router = express.Router();
-
+import { natsWrapper } from "../../NatsWrapper";
 router.post(
   "/api/products",
   requireAuth,sellerOnly,
@@ -49,7 +49,20 @@ router.post(
       description,
       countInStock,
     });
+    new ProductCreatedPublisher(natsWrapper.client).publish({
+      title,
+      price,
+      userId: req.currentUser!.id,
+      images,
+      colors,
+      sizes,
+      brand,
+      category,
+      material,
+      description,
+      countInStock,
 
+    });
     await product.save();
     res.status(201).send(product);
   }

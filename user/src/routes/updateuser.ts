@@ -9,7 +9,7 @@ import {
   currentUser,
 } from '@karkaushal/common';
 import { User, UserAttrs } from '../models/user';
-
+import { app } from '../app';
 const router = express.Router();
 
 router.patch(
