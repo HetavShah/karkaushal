@@ -11,6 +11,7 @@ router.get(
   validateRequest,
   async (req: Request, res: Response) => {
     const product = await Product.findById(req.params.productId);
+    
 
     if (!product) {
       throw new NotFoundError();

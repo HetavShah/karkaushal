@@ -1,0 +1,25 @@
+main{
+  min-height: 80vh;
+}
+
+.rating span{
+  margin: 0.1rem;
+}
+
+h1{
+  font-size: 1.4rem;
+  padding: 1rem 0;
+}
+
+h2 {
+  font-size: 1.4rem;
+  padding: 0.5rem 0;
+}
+
+h3{
+  padding: 1rem 0rem;
+}
+
+.color-nav{
+  background-color: rgb(183, 25, 25);
+}
