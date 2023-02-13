@@ -6,6 +6,7 @@ import { User } from "../models/user";
 
 const router = express.Router();
 
+//  TODO : reviews  of the user should be deleted from the product .create one listener in product and create one producer in user and crearte user:deleted event 
 router.delete(
   "/api/users/:userId",
   [param("userId").isMongoId().withMessage("Invalid Id")],

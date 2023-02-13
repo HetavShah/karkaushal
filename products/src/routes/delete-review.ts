@@ -68,7 +68,9 @@ router.delete(
       await product.save();
     }
 
-    res.status(200).send(product);
+    res.status(200).send({
+      message:"Product deleted  successfully"
+    });
   }
 );
 

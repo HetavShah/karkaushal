@@ -39,13 +39,13 @@ app.use(
 );
 app.use(currentUser);
 app.use(createProductRouter);
+app.use(bestsellerRouter);
 app.use(getAllProductsRouter);
 app.use(limiter,updateProductRouter);
 app.use(deleteProductRouter);
 app.use(createReviewRouter);
 app.use(deleteReviewRouter);
 app.use(getProductRouter);
-app.use(bestsellerRouter);
 
 app.all('*', async () => {
   throw new NotFoundError();
