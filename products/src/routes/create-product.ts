@@ -49,21 +49,26 @@ router.post(
       description,
       countInStock,
     });
+    await product.save();
     new ProductCreatedPublisher(natsWrapper.client).publish({
-      title,
-      price,
-      userId: req.currentUser!.id,
-      images,
-      colors,
-      sizes,
-      brand,
-      category,
-      material,
-      description,
-      countInStock,
+      id: product.id,
+      price: product.price,
+      title: product.title,
+      userId: product.userId,
+      images: product.images,
+      colors: product.colors,
+      sizes: product.sizes,
+      brand: product.brand,
+      category: product.category,
+      material: product.material,
+      description: product.description,
+      numReviews: product.numReviews,
+      rating: product.rating,
+      countInStock: product.countInStock,
+      isReserved: product.isReserved,
+      version: product.version,
 
     });
-    await product.save();
     res.status(201).send(product);
   }
 );

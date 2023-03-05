@@ -88,7 +88,8 @@ const userSchema = new mongoose.Schema(
     },
     pehchanCardNo:{
       type: String,
-      unique: true,
+      unique: false,
+      default:"X"
     },
     shopAddress:{type: String},
     website:{type:String}

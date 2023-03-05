@@ -61,19 +61,26 @@ router.patch(
     product.material = material ?? product.material;
     product.description = description ?? product.description;
     product.countInStock = countInStock ?? product.countInStock;
+
     await product.save();
+    
     new ProductUpdatedPublisher(natsWrapper.client).publish({
-      title:product.title,
-      price:product.price,
-      images:product.images,
-      colors:product.colors,
-      sizes:product.sizes,
-      brand:product.brand,
-      category:product.category,
-      material:product.material,
-      description:product.description,
-      countInStock:product.countInStock,
-      userId:product.userId
+      id: product.id,
+      price: product.price,
+      title: product.title,
+      userId: product.userId,
+      images: product.images,
+      colors: product.colors,
+      sizes: product.sizes,
+      brand: product.brand,
+      category: product.category,
+      material: product.material,
+      description: product.description,
+      numReviews: product.numReviews,
+      rating: product.rating,
+      countInStock: product.countInStock,
+      isReserved: product.isReserved,
+      version: product.version,
     });
     res.status(201).send(product);
   }

@@ -19,6 +19,7 @@ export interface ProductAttrs {
   numReviews?: number;
   rating?: number;
   countInStock: number;
+  isReserved?: boolean
 
 }
 
@@ -49,4 +50,5 @@ export interface ProductDoc extends mongoose.Document {
   version: number;
   createdAt: string;
   updatedAt: string;
+  isReserved?: boolean;
 }

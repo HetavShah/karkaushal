@@ -51,6 +51,10 @@ const productSchema = new mongoose.Schema(
     orderId: {
       type: String,
     },
+    isReserved: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     toJSON: {
