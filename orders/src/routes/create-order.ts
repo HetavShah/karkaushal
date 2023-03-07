@@ -14,7 +14,7 @@ import { OrderCreatedPublisher } from '../events/publishers/order-created-publis
 const router = express.Router();
 
 // Payment window opening time in seconds
-const EXPIRATION_WINDOW_SECONDS = 30 * 60;
+const EXPIRATION_WINDOW_SECONDS = 1 * 60;
 
 // 12% current GST rate for all handicraft products
 const GST_RATE = 0.12;

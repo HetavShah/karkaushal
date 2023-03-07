@@ -9,6 +9,7 @@ export interface CartAttrs {
   price: number;
   productId: string;
   product?: ProductDoc;
+  image?: string;
 }
 
 interface ShippingAddressAttrs {

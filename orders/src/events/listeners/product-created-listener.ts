@@ -18,7 +18,7 @@ export class ProductCreatedListener extends Listener<ProductCreatedEvent> {
       countInStock,
       isReserved: false,
     });
-    console.log("Order Service : "+product);
+    // console.log("Order Service : "+product);
     await product.save();
 
     // Acknowledge the message and tell NATS server it successfully processed
