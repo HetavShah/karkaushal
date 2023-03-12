@@ -45,7 +45,8 @@ const CartScreen = ({}) => {
   };
 
   const checkoutHandler = () => {
-    navigate("/login?redirect=shipping");
+    navigate("/login?redirect=/shipping");
+    //navigate("/shipping");
   };
 
   return (
@@ -62,7 +63,7 @@ const CartScreen = ({}) => {
               <ListGroup.Item key={item.product}>
                 <Row>
                   <Col md={2}>
-                    <Image src={item.image} alt={item.name} fluid rounded />
+                    <Image src={item.image} alt={item.title} fluid rounded />
                   </Col>
                   <Col md={3}>
                     <Link to={`/product/${item.product}`}>{item.title}</Link>

@@ -4,6 +4,7 @@ import { natsWrapper } from "../NatsWrapper";
 import { ProductCreatedListener } from './events/listeners/product-created-listener';
 import { ProductUpdatedListener } from './events/listeners/product-updated-listener';
 import { ExpirationCompletedListener } from './events/listeners/expiration-completed-listener';
+import { PaymentCreatedListener } from './events/listeners/payment-created-listener';
 const start=async ()=>{
 
   if(!process.env.JWT_KEY)
@@ -46,6 +47,7 @@ const start=async ()=>{
       new ProductCreatedListener(natsWrapper.client).listen();
       new ProductUpdatedListener(natsWrapper.client).listen();
       new ExpirationCompletedListener(natsWrapper.client).listen();
+      new PaymentCreatedListener(natsWrapper.client).listen();
 
     } catch (err) {
       console.error(err);

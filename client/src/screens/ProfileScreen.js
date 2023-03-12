@@ -33,9 +33,11 @@ const ProfileScreen = ({}) => {
     if (!userInfo) {
       navigate("/login");
     } else {
+      console.log(userInfo);
       if (!user.name || success) {
+        console.log(user);
         dispatch({ type: USER_UPDATE_PROFILE_RESET });
-        dispatch(getUserDetails("profile"));
+        dispatch(getUserDetails(userInfo.id));
       } else {
         setName(user.name);
         setEmail(user.email);

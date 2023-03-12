@@ -24,11 +24,32 @@ spec:
                 name: products-srv
                 port:
                   number: 3000
+          - path: /api/upload/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: products-srv
+                port:
+                  number: 3000
+          - path: /upload/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: products-srv
+                port:
+                  number: 3000
           - path: /api/orders/?(.*)
             pathType: Prefix
             backend:
               service:
                 name: orders-srv
+                port:
+                  number: 3000
+          - path: /api/payments/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: payment-srv
                 port:
                   number: 3000
           - path: /?(.*)

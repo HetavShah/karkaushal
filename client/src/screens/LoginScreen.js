@@ -20,7 +20,7 @@ const LoginScreen = ({}) => {
   const { loading, error, userInfo } = userLogin;
 
   const redirect = search ? search.split("=")[1] : "/";
-
+  console.log(redirect);
   useEffect(() => {
     if (userInfo) {
       navigate(redirect);
@@ -67,6 +67,12 @@ const LoginScreen = ({}) => {
         <Col>
           New Customer?
           <Link to={"/register"}>Register</Link>
+        </Col>
+      </Row>
+      <Row className="py-2">
+        <Col>
+          New Seller?
+          <Link to={"/seller"}>Register</Link>
         </Col>
       </Row>
     </FormContainer>

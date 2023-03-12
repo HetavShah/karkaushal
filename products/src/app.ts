@@ -5,6 +5,8 @@ import { errorHandler, NotFoundError, currentUser } from '@karkaushal/common';
 import { createProductRouter } from './routes/create-product';
 import { getAllProductsRouter } from './routes/get-all-products';
 import helmet from 'helmet';
+import path from 'path';
+import cors from 'cors';
 
 
 import  rateLimit  from 'express-rate-limit';
@@ -14,6 +16,8 @@ import { createReviewRouter } from './routes/create-review';
 import { deleteReviewRouter } from './routes/delete-review';
 import { getProductRouter } from './routes/get-product';
 import { bestsellerRouter } from './routes/best-seller';
+import { uploadImageRouter } from './routes/upload-images';
+import { getSellerProductsRouter } from './routes/get-product-by-seller';
 const WINDOW_TIME=15*60*1000; // 15 mins
 const MAX_REQ=5;
 const limiter=rateLimit({
@@ -30,18 +34,26 @@ const limiter=rateLimit({
 const app = express();
 app.set('trust proxy', true);
 app.use(express.json());
-app.use(helmet());
+app.use(helmet({
+  crossOriginResourcePolicy:false
+}));
 app.use(
   cookieSession({
     signed: false,
     secure: process.env.NODE_ENV !== 'test',
   })
 );
+app.use(cors());
+const dirname = path.resolve()
+console.log(path.join(dirname, '/uploads'));
+app.use('/uploads', express.static(path.join(dirname, '/uploads')))
 app.use(currentUser);
+app.use(uploadImageRouter);
 app.use(createProductRouter);
 app.use(bestsellerRouter);
+app.use(getSellerProductsRouter);
 app.use(getAllProductsRouter);
-app.use(limiter,updateProductRouter);
+app.use(updateProductRouter);
 app.use(deleteProductRouter);
 app.use(createReviewRouter);
 app.use(deleteReviewRouter);

@@ -14,7 +14,12 @@ const RegisterScreen = ({}) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
-
+  const [age,setAge]=useState("");
+ 
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [postalcode, setPostalCode] = useState("");
+  const [country, setCountry] = useState("");
   const { search } = useLocation();
   const navigate = useNavigate();
 
@@ -36,7 +41,7 @@ const RegisterScreen = ({}) => {
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
     } else {
-      dispatch(register(name, email, password));
+      dispatch(register(name, email, password,age,address,city,postalcode,country,));
     }
   };
 
@@ -87,6 +92,61 @@ const RegisterScreen = ({}) => {
           ></Form.Control>
         </Form.Group>
 
+        <Form.Group controlId="address">
+          <Form.Label>Address</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter address"
+            value={address}
+            required
+            onChange={(e) => setAddress(e.target.value)}
+          ></Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId="city">
+          <Form.Label>City</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter city"
+            value={city}
+            required
+            onChange={(e) => setCity(e.target.value)}
+          ></Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId="postalcode">
+          <Form.Label>Postal Code</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter postal code"
+            value={postalcode}
+            required
+            onChange={(e) => setPostalCode(e.target.value)}
+          ></Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId="country">
+          <Form.Label>Country</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter country"
+            value={country}
+            required
+            onChange={(e) => setCountry(e.target.value)}
+          ></Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId="age">
+          <Form.Label>Age</Form.Label>
+          <Form.Control
+            type="number"
+            placeholder="Enter age"
+            value={age}
+            required
+            onChange={(e) => setAge(e.target.value)}
+          ></Form.Control>
+        </Form.Group>
+        
         <Button className="my-3" type="submit" variant="primary">
           Register
         </Button>

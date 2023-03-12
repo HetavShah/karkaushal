@@ -83,7 +83,7 @@ const userSchema = new mongoose.Schema(
     shippingAddress: {
       address: { type: String },
       city: { type: String },
-      postalCode: { type: String },
+      postalcode: { type: String },
       country: { type: String },
     },
     pehchanCardNo:{

@@ -40,6 +40,7 @@ interface OrderAttrs {
   paidAt?: Date;
   isDelivered?: boolean;
   deliveredAt?: Date;
+  image?:string
 }
 
 // An interface that describes the properties
@@ -95,12 +96,13 @@ const orderSchema = new mongoose.Schema<OrderDoc,OrderModel>(
           type: mongoose.Schema.Types.ObjectId,
           ref: 'Product',
         },
+        image:{type: String}
       },
     ],
     shippingAddress: {
       address: { type: String,required:true },
       city: { type: String,required:true },
-      postalCode: { type: String ,required:true },
+      postalcode: { type: String ,required:true },
       country: { type: String,required:true },
     },
     paymentMethod:{

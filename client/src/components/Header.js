@@ -12,7 +12,7 @@ const Header = () => {
   const logoutHandler = () => {
     dispatch(logout());
   };
-
+  console.log(userInfo);
   return (
     <header>
       <Navbar className="color-nav" variant="dark" expand="lg" collapseOnSelect>
@@ -43,6 +43,17 @@ const Header = () => {
                     <i className="fas fa-user"></i>Sign In
                   </Nav.Link>
                 </LinkContainer>
+              )}
+              {userInfo && userInfo.isSeller && (
+                <NavDropdown title="Seller" id="adminmenu">
+                  
+                  <LinkContainer to="/admin/productlist">
+                    <NavDropdown.Item>Products</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/admin/orderlist">
+                    <NavDropdown.Item>Orders</NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown>
               )}
             </Nav>
           </Navbar.Collapse>

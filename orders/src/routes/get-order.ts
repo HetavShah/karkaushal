@@ -9,10 +9,9 @@ router.get('/api/orders/:orderId',requireAuth,[
 ],validateRequest,async (req:Request, res:Response)=>{
 
   let orders= await Order.find({
-    userId:req.currentUser?.id,
     id:req.params.orderId
   });
-
+  // console.log(orders)
   if (!orders) {
     orders = [];
   }

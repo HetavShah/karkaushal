@@ -40,7 +40,7 @@ router.post(
     const expiration = new Date();
     expiration.setSeconds(expiration.getSeconds() + EXPIRATION_WINDOW_SECONDS);
 
-    let { cart, paymentMethod, shippingAddress } = req.body;
+    let { cart, paymentMethod, shippingAddress,image } = req.body;
 
     let finalItemAmount = 0;
   for(let item of cart) {
@@ -71,7 +71,7 @@ router.post(
       shippingPrice: SHIPPING_RATE,
       taxPrice: finalItemAmount * GST_RATE,
       totalPrice: totalAmount,
-
+      image:image,
       shippingAddress: shippingAddress,
       cart: cart,
     });
