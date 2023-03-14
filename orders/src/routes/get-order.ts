@@ -7,16 +7,11 @@ const router =express.Router();
 router.get('/api/orders/:orderId',requireAuth,[
   param("orderId").isMongoId().withMessage("invalid Order Id"),
 ],validateRequest,async (req:Request, res:Response)=>{
-
-  let orders= await Order.find({
-    id:req.params.orderId
-  });
+  console.log(req.params.orderId);
+  let order= await Order.findById(req.params.orderId).populate('cart.product');
   // console.log(orders)
-  if (!orders) {
-    orders = [];
-  }
 
-  return res.status(200).send(orders);
+  return res.status(200).send(order);
 })
 
 export {router as getOrder}

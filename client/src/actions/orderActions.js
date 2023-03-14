@@ -67,6 +67,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
 };
 
 export const getOrderDetails = (id) => async (dispatch, getState) => {
+  console.log(id);
   try {
     dispatch({
       type: ORDER_DETAILS_REQUEST,
@@ -83,10 +84,10 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(`/api/orders/${id}`, config);
-
+    console.log(data)
     dispatch({
       type: ORDER_DETAILS_SUCCESS,
-      payload: data[0],
+      payload: data,
     });
   } catch (error) {
     const message =
@@ -110,22 +111,11 @@ export const payOrder =
         type: ORDER_PAY_REQUEST,
       });
 
-      const {
-        userLogin: { userInfo },
-      } = getState();
+      
 
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      };
-
-      const { data } = await axios.put(
-        `/api/orders/${orderId}/pay`,
-        paymentResult,
-        config
-      );
+      const { data } = await axios.post('/api/payments', {
+        orderId
+      });
 
       dispatch({
         type: ORDER_PAY_SUCCESS,
@@ -189,6 +179,7 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
 
 export const listMyOrders = () => async (dispatch, getState) => {
   try {
+    console.log('here')
     dispatch({
       type: ORDER_LIST_MY_REQUEST,
     });
@@ -203,8 +194,9 @@ export const listMyOrders = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/orders/myorders`, config);
+    const data  = await axios.get(`/api/orders`, config);
 
+console.log(data)
     dispatch({
       type: ORDER_LIST_MY_SUCCESS,
       payload: data,

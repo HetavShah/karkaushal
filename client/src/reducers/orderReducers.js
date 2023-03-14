@@ -51,7 +51,7 @@ export const orderDetailsReducer = (
   state = { loading: true, cart: [], shippingAddress: {} },
   action
 ) => {
-  console.log(action.type)
+  // console.log(action.type)
   switch (action.type) {
     case ORDER_DETAILS_REQUEST:
       return {
@@ -120,6 +120,8 @@ export const orderDeliverReducer = (state = {}, action) => {
 };
 
 export const orderListMyReducer = (state = { orders: [] }, action) => {
+  console.log('OrderListReducer')
+  console.log(action.type)
   switch (action.type) {
     case ORDER_LIST_MY_REQUEST:
       return {

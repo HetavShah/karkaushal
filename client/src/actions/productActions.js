@@ -234,6 +234,7 @@ export const createProductReview =
         type: PRODUCT_CREATE_REVIEW_SUCCESS,
       });
     } catch (error) {
+      console.log(error)
       const message =
         error.response && error.response.data.message
           ? error.response.data.message

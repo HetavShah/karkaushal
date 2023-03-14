@@ -1,25 +1,30 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-// import { PayPalButton } from "react-paypal-button-v2";
-import { Link } from "react-router-dom";
-import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import StripeCheckout from 'react-stripe-checkout';
+import { Link } from 'react-router-dom';
+import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   getOrderDetails,
   payOrder,
   deliverOrder,
-} from "../actions/orderActions";
+} from '../actions/orderActions';
 import {
   ORDER_PAY_RESET,
   ORDER_DELIVER_RESET,
-} from "../constants/orderConstants";
-import { useParams, useNavigate } from "react-router-dom";
+} from '../constants/orderConstants';
+import { useParams, useNavigate } from 'react-router-dom';
+
+toast.configure();
 
 const OrderScreen = ({}) => {
   const { id } = useParams();
-  console.log(useParams());
+  // console.log(useParams());
+
   const navigate = useNavigate();
 
   const [sdkReady, setSdkReady] = useState(false);
@@ -28,7 +33,7 @@ const OrderScreen = ({}) => {
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
-  console.log(orderDetails)
+  // console.log(orderDetails)
 
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
@@ -39,52 +44,80 @@ const OrderScreen = ({}) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const handleToken = async (token, amount) => {
+    try {
+      console.log(amount);
+      const res = await axios.post('/api/payments', {
+        orderId:order.id
+      });
+      const { id } = res.data;
+      console.log(res.data);
+      if (id) {
+        toast('Success ! Check emails for details', {
+          type: 'success',
+        });
+      } else {
+        toast('Something went wrong', {
+          type: 'failure',
+        });
+      }
+    } catch (err) {
+      toast('Something went wrong', {
+        type: 'failure',
+      });
+    }
+  };
+
   if (!loading) {
     //   Calculate prices
     const addDecimals = (num) => {
       return (Math.round(num * 100) / 100).toFixed(2);
     };
-    console.log(order)
     order.itemsPrice = addDecimals(
       order.cart.reduce((acc, item) => acc + item.price * item.qty, 0)
     );
   }
-
+  const [timeLeft, setTimeLeft] = useState(0);
   useEffect(() => {
     if (!userInfo) {
-      navigate("/login");
+      navigate('/login');
     }
 
-    const addPayPalScript = async () => {
-      const { data: clientId } = await axios.get("/api/config/paypal");
-      const script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
-      script.async = true;
-      script.onload = () => {
-        setSdkReady(true);
-      };
-      document.body.appendChild(script);
-    };
-
-    if (!order  || order.id !== id) {
+    if (!order || successPay || successDeliver || order.id !== id) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(getOrderDetails(id));
     } else if (!order.isPaid) {
-      order.isPaid = true;
-      
+    }
+
+    //console.log(order);
+    if (order) {
+      const findTimeLeft = () => {
+        const msLeft = new Date(order.expiresAt) - new Date();
+        setTimeLeft(Math.round(msLeft / 1000));
+      };
+
+      findTimeLeft();
+      const timerId = setInterval(findTimeLeft, 1000);
+
+      return () => {
+        clearInterval(timerId);
+      };
     }
   }, [dispatch, id, successPay, successDeliver, order]);
+
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order));
+  };
 
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult);
     dispatch(payOrder(id, paymentResult));
   };
 
-  const deliverHandler = () => {
-    dispatch(deliverOrder(order));
-  };
+  if (timeLeft < 0) {
+    return <div>Order Expired</div>;
+  }
 
   return loading ? (
     <Loader />
@@ -98,11 +131,11 @@ const OrderScreen = ({}) => {
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>Shipping</h2>
-              
+
               <p>
                 <strong>Address:</strong>
-                {order.shippingAddress.address}, {order.shippingAddress.city}{" "}
-                {order.shippingAddress.postalCode},{" "}
+                {order.shippingAddress.address}, {order.shippingAddress.city}{' '}
+                {order.shippingAddress.postalCode},{' '}
                 {order.shippingAddress.country}
               </p>
               {order.isDelivered ? (
@@ -139,14 +172,14 @@ const OrderScreen = ({}) => {
                         <Col md={1}>
                           <Image
                             src={item.image}
-                            alt={item.name}
+                            alt={item.title}
                             fluid
                             rounded
                           />
                         </Col>
                         <Col>
                           <Link to={`/product/${item.product}`}>
-                            {item.name}
+                            {item.title}
                           </Link>
                         </Col>
                         <Col md={4}>
@@ -190,19 +223,21 @@ const OrderScreen = ({}) => {
                   <Col>${order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              {/* {!order.isPaid && (
+
+              {!order.isPaid && (
                 <ListGroup.Item>
                   {loadingPay && <Loader />}
-                  {!sdkReady ? (
-                    <Loader />
-                  ) : (
-                    <PayPalButton
-                      amount={order.totalPrice}
-                      onSuccess={successPaymentHandler}
-                    />
-                  )}
+
+                  <StripeCheckout
+                    token={successPaymentHandler}
+                    stripeKey="pk_test_JMdyKVvf8EGTB0Fl28GsN7YY"
+                    amount={order.totalPrice * 100}
+                    email={userInfo.email}
+                    
+                  />
                 </ListGroup.Item>
-              )} */}
+              )}
+              <h4>Time left to pay: {timeLeft} seconds</h4>
               {loadingDeliver && <Loader />}
               {userInfo &&
                 userInfo.isSeller &&

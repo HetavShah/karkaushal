@@ -50,15 +50,15 @@ const PlaceOrderScreen = ({ history }) => {
     }
     let myCart=[];
     cart.cartItems.forEach((product)=>{
+      // console.log(product)
       let item={};
       item.productId=product.product;
       item.qty=product.qty;
       item.title=product.title;
       item.price=product.price;
-      // item.image=product.image;
+      item.image=product.image;
       myCart.push(item);
     })
-    console.log(cart)
     dispatch(
       createOrder({
         cart: myCart,
