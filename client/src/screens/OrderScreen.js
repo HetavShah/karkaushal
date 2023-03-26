@@ -2,7 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import StripeCheckout from 'react-stripe-checkout';
 import { Link } from 'react-router-dom';
-import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
+import {
+  Row,
+  Col,
+  ListGroup,
+  Image,
+  Card,
+  Button,
+  ListGroupItem,
+} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -48,7 +56,7 @@ const OrderScreen = ({}) => {
     try {
       console.log(amount);
       const res = await axios.post('/api/payments', {
-        orderId:order.id
+        orderId: order.id,
       });
       const { id } = res.data;
       console.log(res.data);
@@ -87,7 +95,8 @@ const OrderScreen = ({}) => {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(getOrderDetails(id));
-    } else if (!order.isPaid) {
+    } else if (order.isPaid) {
+      
     }
 
     //console.log(order);
@@ -116,7 +125,7 @@ const OrderScreen = ({}) => {
   };
 
   if (timeLeft < 0) {
-    return <div>Order Expired</div>;
+    <div>Order Expired</div>;
   }
 
   return loading ? (
@@ -178,12 +187,12 @@ const OrderScreen = ({}) => {
                           />
                         </Col>
                         <Col>
-                          <Link to={`/product/${item.product}`}>
+                          <Link to={`/product/${item.productId}`}>
                             {item.title}
                           </Link>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
+                          {item.qty} x ₹{item.price} = ₹{item.qty * item.price}
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -202,29 +211,29 @@ const OrderScreen = ({}) => {
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
-                  <Col>${order.itemsPrice}</Col>
+                  <Col>₹{order.itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Shipping</Col>
-                  <Col>${order.shippingPrice}</Col>
+                  <Col>₹{order.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
-                  <Col>Tax</Col>
-                  <Col>${order.taxPrice}</Col>
+                  <Col>GST</Col>
+                  <Col>₹{order.taxPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Total</Col>
-                  <Col>${order.totalPrice}</Col>
+                  <Col>₹{order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
-              {!order.isPaid && (
+              {(!order.isPaid && timeLeft > 0) && (
                 <ListGroup.Item>
                   {loadingPay && <Loader />}
 
@@ -233,11 +242,19 @@ const OrderScreen = ({}) => {
                     stripeKey="pk_test_JMdyKVvf8EGTB0Fl28GsN7YY"
                     amount={order.totalPrice * 100}
                     email={userInfo.email}
-                    
                   />
                 </ListGroup.Item>
               )}
-              <h4>Time left to pay: {timeLeft} seconds</h4>
+              {(!order.isPaid && timeLeft > 0)&& (
+                <ListGroupItem>
+                  <h4>Time left to pay: {timeLeft} seconds</h4>
+                </ListGroupItem>
+              )}
+              {(!order.isPaid && timeLeft < 0) && (
+                <ListGroup.Item>
+                  <h3>{order.status}</h3>
+                </ListGroup.Item>
+              )}
               {loadingDeliver && <Loader />}
               {userInfo &&
                 userInfo.isSeller &&

@@ -8,6 +8,7 @@ import { createOrder } from './routes/create-order';
 import { cancelOrder } from './routes/cancel-order';
 import { getAllOrders } from './routes/get-all-order';
 import { getOrder } from './routes/get-order';
+import { deliverOrderRouter } from './routes/order-deliverey';
 
 const app = express();
 
@@ -23,7 +24,7 @@ app.use(
 );
 
 app.use(currentUser);
-
+app.use(deliverOrderRouter);
 app.use(createOrder);
 app.use(cancelOrder);
 app.use(getOrder);

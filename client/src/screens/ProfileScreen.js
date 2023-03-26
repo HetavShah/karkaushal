@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import { getUserDetails, updateUserProfile } from "../actions/userActions";
-import { useNavigate } from "react-router-dom";
-import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstant";
+import React, { useState, useEffect } from 'react';
+import { Form, Button, Row, Col } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+import { getUserDetails, updateUserProfile } from '../actions/userActions';
+import { useNavigate } from 'react-router-dom';
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstant';
 import { Table } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { listMyOrders } from "../actions/orderActions";
+import { listMyOrders } from '../actions/orderActions';
 // import Badge from "react-bootstrap/Badge";
 
-const ProfileScreen = ({}) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+const ProfileScreen = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState(null);
 
   //const { search } = useLocation();
@@ -31,19 +31,21 @@ const ProfileScreen = ({}) => {
 
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   const { success } = userUpdateProfile;
-  const orderListMy = useSelector((state) => state.orderListMy)
-  const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
-  console.log(orders);
+  const orderListMy = useSelector((state) => state.orderListMy);
+  console.log(orderListMy);
+  const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
+  // console.log(orders);
 
   useEffect(() => {
     if (!userInfo) {
-      navigate("/login");
+      navigate('/login');
     } else {
       console.log(userInfo);
+      dispatch(listMyOrders());
       if (!userInfo || success) {
         console.log(user);
         dispatch({ type: USER_UPDATE_PROFILE_RESET });
-        dispatch(listMyOrders());
+
         dispatch(getUserDetails(userInfo.data.id));
       } else {
         setName(user.name);
@@ -55,7 +57,7 @@ const ProfileScreen = ({}) => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setMessage("Passwords do not match");
+      setMessage('Passwords do not match');
     } else {
       dispatch(updateUserProfile({ id: user.id, name, email, password }));
     }
@@ -117,16 +119,16 @@ const ProfileScreen = ({}) => {
       </Col>
       <Col md={9}>
         <h2>My Orders</h2>
-      </Col>
-      {loadingOrders ? (
+
+        {loadingOrders ? (
           <Loader />
         ) : errorOrders ? (
-          <Message variant='danger'>{errorOrders}</Message>
+          <Message variant="danger">{errorOrders}</Message>
         ) : (
-          <Table striped bordered hover responsive className='table-sm'>
+          <Table striped bordered hover responsive className="table-sm">
             <thead>
               <tr>
-                <th>ID</th>
+                <th>IMAGE</th>
                 <th>DATE</th>
                 <th>TOTAL</th>
                 <th>PAID</th>
@@ -144,19 +146,19 @@ const ProfileScreen = ({}) => {
                     {order.isPaid ? (
                       order.paidAt.substring(0, 10)
                     ) : (
-                      <i className='fas fa-times' style={{ color: 'red' }}></i>
+                      <i className="fas fa-times" style={{ color: 'red' }}></i>
                     )}
                   </td>
                   <td>
                     {order.isDelivered ? (
                       order.deliveredAt.substring(0, 10)
                     ) : (
-                      <i className='fas fa-times' style={{ color: 'red' }}></i>
+                      <i className="fas fa-times" style={{ color: 'red' }}></i>
                     )}
                   </td>
                   <td>
-                    <LinkContainer to={`/order/${order._id}`}>
-                      <Button className='btn-sm' variant='light'>
+                    <LinkContainer to={`/order/${order.id}`}>
+                      <Button className="btn-sm" variant="light">
                         Details
                       </Button>
                     </LinkContainer>
@@ -166,6 +168,7 @@ const ProfileScreen = ({}) => {
             </tbody>
           </Table>
         )}
+      </Col>
     </Row>
   );
 };

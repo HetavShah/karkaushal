@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 // An interface that describes the properties
@@ -10,6 +10,7 @@ interface ProductAttrs {
   image: string;
   countInStock: number;
   isReserved: boolean;
+  userId:string
 }
 
 // An interface that describes the properties
@@ -31,7 +32,8 @@ export interface ProductDoc extends mongoose.Document<ProductAttrs> {
   image: string;
   countInStock: number;
   version: number;
-  isReserved:boolean
+  isReserved:boolean;
+  userId:string;
 }
 
 const productSchema = new mongoose.Schema<ProductDoc,ProductModel>(
@@ -53,6 +55,10 @@ const productSchema = new mongoose.Schema<ProductDoc,ProductModel>(
       default: false,
     },
     image:{
+      type:String,
+      required:true,
+    },
+    userId:{
       type:String,
       required:true,
     }
@@ -92,7 +98,8 @@ productSchema.statics.build = (attrs: ProductAttrs) => {
     price:attrs.price,
     countInStock:attrs.countInStock,
     image:attrs.image,
-    isReserved:attrs.isReserved
+    isReserved:attrs.isReserved,
+    userId:attrs.userId
   });
 };
 

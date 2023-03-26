@@ -7,7 +7,7 @@
     "start": "ts-node-dev --poll src/index.ts"
   },
   "dependencies": {
-    "@karkaushal/common": "^1.0.22",
+    "@karkaushal/common": "^1.0.23",
     "@types/cookie-session": "^2.0.44",
     "@types/express": "^4.17.15",
     "@types/jsonwebtoken": "^8.5.9",

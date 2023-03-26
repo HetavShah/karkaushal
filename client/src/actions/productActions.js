@@ -39,8 +39,8 @@ export const listProducts = () => async (dispatch) => {
     dispatch({
       type: PRODUCT_LIST_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
+        error.response && error.response.data.errors[0].message
+          ? error.response.data.errors[0].message
           : error.message,
     });
   }
@@ -61,8 +61,8 @@ export const listProductsBySeller = (id) => async (dispatch) => {
     dispatch({
       type: PRODUCT_LIST_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
+        error.response && error.response.data.errors[0].message
+          ? error.response.data.errors[0].message
           : error.message,
     });
   }
@@ -82,8 +82,8 @@ export const listProductDetails = (id) => async (dispatch) => {
     dispatch({
       type: PRODUCT_DETAILS_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
+        error.response && error.response.data.errors[0].message
+          ? error.response.data.errors[0].message
           : error.message,
     });
   }
@@ -111,10 +111,10 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
     });
   } catch (error) {
     const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    if (message === "Not authorized, token failed") {
+    error.response && error.response.data.message
+    ? error.response.data.message
+    : error.message
+    if (message === "Not authorized") {
       dispatch(logout());
     }
     dispatch({
@@ -158,7 +158,7 @@ export const createProduct = () => async (dispatch, getState) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === "Not authorized, token failed") {
+    if (message === "Not authorized") {
       dispatch(logout());
     }
     dispatch({
@@ -198,10 +198,10 @@ export const updateProduct = (product) => async (dispatch, getState) => {
   } catch (error) {
     console.log(error)
     const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    if (message === "Not authorized, token failed") {
+    error.response && error.response.data[0].message
+    ? error.response.data.errors[0].message
+    : error.message;
+    if (message === "Not authorized") {
       dispatch(logout());
     }
     dispatch({
@@ -236,10 +236,10 @@ export const createProductReview =
     } catch (error) {
       console.log(error)
       const message =
-        error.response && error.response.data.message
-          ? error.response.data.message
+        error.response && error.response.data.errors[0].message
+          ? error.response.data.errors[0].message
           : error.message;
-      if (message === "Not authorized, token failed") {
+      if (message === "Not authorized") {
         dispatch(logout());
       }
       dispatch({

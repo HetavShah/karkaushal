@@ -138,9 +138,9 @@ let data;
     dispatch({
       type: USER_REGISTER_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      error.response && error.response.data.errors[0].message
+      ? error.response.data.errors[0].message
+      : error.message,
     });
   }
 };
@@ -173,9 +173,9 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     dispatch({
       type: USER_DETAILS_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      error.response && error.response.data.errors[0].message
+      ? error.response.data.errors[0].message
+      : error.message,
     });
   }
 };
@@ -214,9 +214,9 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     dispatch({
       type: USER_UPDATE_PROFILE_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      error.response && error.response.data.errors[0].message
+      ? error.response.data.errors[0].message
+      : error.message,
     });
   }
 };
@@ -247,9 +247,9 @@ export const listUsers = () => async (dispatch, getState) => {
     dispatch({
       type: USER_LIST_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      error.response && error.response.data.errors[0].message
+      ? error.response.data.errors[0].message
+      : error.message,
     });
   }
 };
@@ -280,9 +280,9 @@ export const deleteUser = (id) => async (dispatch, getState) => {
     dispatch({
       type: USER_DELETE_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      error.response && error.response.data.errors[0].message
+      ? error.response.data.errors[0].message
+      : error.message,
     });
   }
 };
@@ -317,8 +317,8 @@ export const updateUser = (user) => async (dispatch, getState) => {
     dispatch({
       type: USER_UPDATE_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
+      error.response && error.response.data.errors[0].message
+          ? error.response.data.errors[0].message
           : error.message,
     });
   }

@@ -13,28 +13,35 @@ export class ProductUpdatedListener extends Listener<ProductUpdatedEvent> {
   queueGroupName = queueGroupName;
 
   async onMessage(data: ProductUpdatedEvent["data"], msg: Message) {
-    const{ id, title, price, images, countInStock,isReserved } = data;
-    // console.log(data);
+    try{
 
-    const product = await Product.findByEvent(data);
-
-    if (!product) {
-      throw new NotFoundError();
+      const{ id, title, price, images, countInStock,isReserved ,userId} = data;
+      // console.log(data);
+  
+      const product = await Product.findByEvent(data);
+  
+      if (!product) {
+        throw new NotFoundError();
+      }
+  
+      product.set({
+        title,
+        price,
+        id,
+        image: images[0],
+        countInStock,
+        isReserved,
+        userId
+      });
+  
+      // Save and update version
+      await product.save();
+  
+      // Acknowledge the message and tell NATS server it successfully processed
+      msg.ack();
+    }catch(error)
+    {
+      console.error(error);
     }
-
-    product.set({
-      title,
-      price,
-      id,
-      image: images[0],
-      countInStock,
-      isReserved
-    });
-
-    // Save and update version
-    await product.save();
-
-    // Acknowledge the message and tell NATS server it successfully processed
-    msg.ack();
   }
 }

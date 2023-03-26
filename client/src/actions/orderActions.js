@@ -21,7 +21,7 @@ import {
   ORDER_DELIVER_REQUEST,
 } from "../constants/orderConstants";
 import { logout } from "./userActions";
-
+import { useNavigate } from "react-router-dom";
 export const createOrder = (order) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -56,7 +56,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === "Not authorized, token failed") {
+    if (message === "Not authorized") {
       dispatch(logout());
     }
     dispatch({
@@ -94,7 +94,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === "Not authorized, token failed") {
+    if (message === "Not authorized") {
       dispatch(logout());
     }
     dispatch({
@@ -106,7 +106,10 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
 
 export const payOrder =
   (orderId, paymentResult) => async (dispatch, getState) => {
+
     try {
+     
+
       dispatch({
         type: ORDER_PAY_REQUEST,
       });
@@ -117,16 +120,19 @@ export const payOrder =
         orderId
       });
 
+      
       dispatch({
         type: ORDER_PAY_SUCCESS,
         payload: data,
       });
+    
     } catch (error) {
+      console.log(error)
       const message =
-        error.response && error.response.data.message
-          ? error.response.data.message
+        error.response && error.response.data.errors[0].message
+          ? error.response.data.errors[0].message
           : error.message;
-      if (message === "Not authorized, token failed") {
+      if (message === "Not authorized") {
         dispatch(logout());
       }
       dispatch({
@@ -152,9 +158,8 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(
-      `/api/orders/${order._id}/deliver`,
-      {},
+    const { data } = await axios.patch(
+      `/api/orders/${order.id}/deliver`,
       config
     );
 
@@ -163,11 +168,12 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
+    console.log(error)
     const message =
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === "Not authorized, token failed") {
+    if (message === "Not authorized") {
       dispatch(logout());
     }
     dispatch({
@@ -199,14 +205,14 @@ export const listMyOrders = () => async (dispatch, getState) => {
 console.log(data)
     dispatch({
       type: ORDER_LIST_MY_SUCCESS,
-      payload: data,
+      payload: data.data,
     });
   } catch (error) {
     const message =
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === "Not authorized, token failed") {
+    if (message === "Not authorized") {
       dispatch(logout());
     }
     dispatch({
@@ -243,7 +249,7 @@ export const listOrders = () => async (dispatch, getState) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === "Not authorized, token failed") {
+    if (message === "Not authorized") {
       dispatch(logout());
     }
     dispatch({

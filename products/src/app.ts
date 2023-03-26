@@ -53,11 +53,11 @@ app.use(createProductRouter);
 app.use(bestsellerRouter);
 app.use(getSellerProductsRouter);
 app.use(getAllProductsRouter);
-app.use(updateProductRouter);
 app.use(deleteProductRouter);
 app.use(createReviewRouter);
 app.use(deleteReviewRouter);
 app.use(getProductRouter);
+app.use(limiter,updateProductRouter);
 
 app.all('*', async () => {
   throw new NotFoundError();

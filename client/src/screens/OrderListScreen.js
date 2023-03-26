@@ -37,7 +37,6 @@ const OrderListScreen = ({}) => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>USER</th>
               <th>DATE</th>
               <th>TOTAL</th>
               <th>PAID</th>
@@ -47,9 +46,8 @@ const OrderListScreen = ({}) => {
           </thead>
           <tbody>
             {orders.map((order) => (
-              <tr key={order._id}>
-                <td>{order._id}</td>
-                <td>{order.user && order.user.name}</td>
+              <tr key={order.id}>
+                <td>{order.id}</td>
                 <td>{order.createdAt.substring(0, 10)}</td>
                 <td>${order.totalPrice}</td>
                 <td>
@@ -67,7 +65,7 @@ const OrderListScreen = ({}) => {
                   )}
                 </td>
                 <td>
-                  <LinkContainer to={`/order/${order._id}`}>
+                  <LinkContainer to={`/order/${order.id}`}>
                     <Button variant="light" className="btn-sm">
                       Details
                     </Button>

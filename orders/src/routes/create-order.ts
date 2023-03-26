@@ -45,6 +45,7 @@ router.post(
     let finalItemAmount = 0;
   for(let item of cart) {
       console.log(item.productId);
+      console.log(item.sellerId);
       const product = await Product.findById(item.productId);
       if (!product) throw new NotFoundError();
       // if the required quantity of the product is grester then the available quantity then throw error
