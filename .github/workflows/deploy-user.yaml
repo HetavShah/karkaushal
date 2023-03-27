@@ -3,7 +3,7 @@ name: deploy-user
 on:
   push:
     branches:
-      -master
+      - master
     paths:
       - 'user/**'
 
