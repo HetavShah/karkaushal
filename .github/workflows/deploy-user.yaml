@@ -1,0 +1,16 @@
+name: deploy-auth
+
+on:
+  push:
+    branches:
+      -master
+    paths:
+      - 'auth/**'
+
+jobs:
+  build:
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v2
+       - run: cd user && docker build -t hetavshah/user .
+       
