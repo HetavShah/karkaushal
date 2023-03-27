@@ -37,7 +37,7 @@ app.all('*', async (req: Request, res: Response) => {
   res.status(404).send({message:'Not Found'});
 });
 
-// trial comment for checking github workflows v2
+// trial comment for checking github workflows v3
 
 app.use(errorHandler);
 export { app };
