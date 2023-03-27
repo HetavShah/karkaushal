@@ -27,4 +27,4 @@ jobs:
            cluster_name: ${{ env.GKE_CLUSTER }}
            location: ${{ env.GKE_ZONE }}
            credentials: ${{ secrets.GKE_SA_KEY }}
-       - run: kubectl apply -f ../infra/k8s/user-depl.yaml
+       - run: kubectl apply -f ./infra/k8s/user-depl.yaml
