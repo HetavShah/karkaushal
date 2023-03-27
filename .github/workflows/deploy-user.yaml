@@ -5,7 +5,7 @@ on:
     branches:
       -master
     paths:
-      - 'auth/**'
+      - 'user/**'
 
 jobs:
   build:
