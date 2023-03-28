@@ -9,7 +9,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: karkaushal    
-  GKE_ZONE: us-central1      
+  GKE_ZONE: us-central1-c      
 
 jobs:
   build:
