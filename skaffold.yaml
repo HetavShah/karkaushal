@@ -17,15 +17,15 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    # - image: hetavshah/client
-    #   context: client
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - src: 'src/**/*.ts'
-    #         dest: .
-    - image: hetavshah/products
+    - image: hetavshah/client-karkaushal
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: hetavshah/products-karkaushal
       context: products
       docker:
         dockerfile: Dockerfile

@@ -14,7 +14,7 @@ spec:
     spec:  
       containers:
       - name: products
-        image: hetavshah/products
+        image: hetavshah/products-karkaushal
         env:
           - name: MONGO_URI
             value: 'mongodb://products-mongo-srv:27017/products'
