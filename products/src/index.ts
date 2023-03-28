@@ -4,7 +4,7 @@ import { natsWrapper } from "../NatsWrapper";
 import { OrderCreatedListener } from './events/listeners/order-created-listener';
 import { OrderUpdatedListener } from './events/listeners/order-updated-listener';
 const start=async ()=>{
-
+  console.log("starting products....");
   if(!process.env.JWT_KEY)
   {
     throw new Error('JWT_KEY environment variable is not set');

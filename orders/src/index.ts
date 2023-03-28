@@ -6,7 +6,7 @@ import { ProductUpdatedListener } from './events/listeners/product-updated-liste
 import { ExpirationCompletedListener } from './events/listeners/expiration-completed-listener';
 import { PaymentCreatedListener } from './events/listeners/payment-created-listener';
 const start=async ()=>{
-
+console.log("Starting Orders....");
   if(!process.env.JWT_KEY)
   {
     throw new Error('JWT_KEY environment variable is not set');

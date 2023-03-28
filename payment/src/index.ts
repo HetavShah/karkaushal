@@ -4,6 +4,7 @@ import { natsWrapper } from "../NatsWrapper";
 import { OrderCreatedListener } from './events/listeners/order-created-listener';
 import { OrderUpdatedListener } from './events/listeners/order-updated-listener';
 const start=async ()=>{
+  console.log("starting payments...");
 
   if(!process.env.JWT_KEY)
   {
