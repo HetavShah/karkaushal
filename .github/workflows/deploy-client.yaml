@@ -1,0 +1,39 @@
+name: deploy-client
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'client/**'
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: karkaushal    
+  GKE_ZONE: us-central1-c      
+
+jobs:
+  build:
+     runs-on: ubuntu-latest
+     steps:
+     # Create docker image and push it to Dockerhub with Credentials
+       - uses: actions/checkout@v2
+       - run: cd client && docker build -t hetavshah/client-karkaushal .
+       - run : docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+         env: 
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+       - run : docker push hetavshah/client-karkaushal
+       
+       # Setup google cloud CLI
+       - uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
+         with:
+            service_account_key: ${{ secrets.GKE_SA_KEY }}
+            project_id: ${{ secrets.GKE_PROJECT }}
+       
+       # connect to Our Cluster
+       - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
+         with:
+           cluster_name: ${{ env.GKE_CLUSTER }}
+           location: ${{ env.GKE_ZONE }}
+           credentials: ${{ secrets.GKE_SA_KEY }}
+       - run: kubectl rollout restart deployment client-depl
