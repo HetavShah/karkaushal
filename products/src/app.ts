@@ -19,7 +19,7 @@ import { bestsellerRouter } from './routes/best-seller';
 import { uploadImageRouter } from './routes/upload-images';
 import { getSellerProductsRouter } from './routes/get-product-by-seller';
 const WINDOW_TIME=15*60*1000; // 15 mins
-const MAX_REQ=5;
+const MAX_REQ=30;
 const limiter=rateLimit({
   windowMs:WINDOW_TIME,
   max:MAX_REQ,
