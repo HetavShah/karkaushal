@@ -46,6 +46,7 @@ router.post(
   for(let item of cart) {
       console.log(item.productId);
       console.log(item.sellerId);
+      console.log(item.qty);
       const product = await Product.findById(item.productId);
       if (!product) throw new NotFoundError();
       // if the required quantity of the product is grester then the available quantity then throw error
@@ -57,11 +58,11 @@ router.post(
       /* Logic for Reserved Product : If a product available quantity count is equal to 0 then it will have the reserved property*/
       if (product.isReserved) throw new Error('Product is reserved');
       // Calculate the final amount of the cart
-      finalItemAmount += product.price * item.qty;
+      finalItemAmount = finalItemAmount+ (product.price * item.qty);
       // check if product is a valid product
     }
     const totalAmount =
-      finalItemAmount + finalItemAmount * GST_RATE + SHIPPING_RATE;
+      finalItemAmount + (finalItemAmount * GST_RATE) + SHIPPING_RATE;
 
     const order = Order.build({
       userId: req.currentUser!.id,
