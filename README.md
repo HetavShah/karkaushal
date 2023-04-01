@@ -6,6 +6,10 @@ Karkaushal is an  e-commerce website for the people who sells handicraft product
 
 www.karkaushal.in
 
+## Software Architecture
+
+![App Screenshot](./documentation/softwareArch.png)
+![App Screenshot](./documentation/pub-sub-pattern.png)
 
 ## Installation
 
@@ -40,7 +44,9 @@ kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<YOUR SECRET>
 ```
 ## Screenshots
 
-![App Screenshot](./Picture1.png)
+![App Screenshot](./documentation/homePage.png)
+![App Screenshot](./documentation/productPage.png)
+![App Screenshot](./documentation/paymentPage.png)
 
 
 ## Features
