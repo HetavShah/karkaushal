@@ -63,10 +63,20 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-export const logout = () => (dispatch) => {
+export const logout = () => async(dispatch) => {
+ let data;
+ try{
+  data=await axios.post('/api/users/signout',{});
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
   dispatch({ type: USER_LIST_RESET });
+ }catch(error)
+ {
+  localStorage.removeItem("userInfo");
+  dispatch({ type: USER_LOGOUT });
+  dispatch({ type: USER_LIST_RESET });
+ }
+
 };
 
 export const register = (name, email, password,age,address,city,postalcode,country,pehchanCardNo="",shopAddress="",website="",isSeller=false) => async (dispatch) => {
