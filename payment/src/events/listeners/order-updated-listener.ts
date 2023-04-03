@@ -25,7 +25,7 @@ export class OrderUpdatedListener extends Listener<OrderUpdatedEvent> {
       throw new Error("Order not found");
     }
 
-    if (order.isPaid) {
+    if (data.isPaid) {
       order.set({
         status: data.status,
         isPaid: data.isPaid,
