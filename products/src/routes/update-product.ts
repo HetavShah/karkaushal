@@ -6,14 +6,27 @@ import type { ProductAttrs } from "../models/types/product";
 import { natsWrapper } from "../../NatsWrapper";
 import { ProductUpdatedPublisher } from "../events/publishers/product-updated-publisher";
 const router = express.Router();
-
+import  rateLimit  from 'express-rate-limit';
+const WINDOW_TIME=15*60*1000; // 15 mins
+const MAX_REQ=30;
+const limiter=rateLimit({
+  windowMs:WINDOW_TIME,
+  max:MAX_REQ,
+  standardHeaders: true, 
+	legacyHeaders: false,
+  message:JSON.stringify(
+    [{
+      message:"Too many requests , Try after 15 mins"
+    }]
+    ) 
+  })
 
 // TODO appy rate-limit functionality 
 // TODO seller should only be allowed to change the price if the product is not reserved
 
 router.patch(
   "/api/products/:id",
-  requireAuth,sellerOnly,
+  requireAuth,sellerOnly,limiter,
   [
     param("id").isMongoId().withMessage("correct product id is required"),
     body("title").optional().not().isEmpty().withMessage("title is required"),

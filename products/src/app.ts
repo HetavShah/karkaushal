@@ -8,8 +8,6 @@ import helmet from 'helmet';
 import path from 'path';
 import cors from 'cors';
 
-
-import  rateLimit  from 'express-rate-limit';
 import { updateProductRouter } from './routes/update-product';
 import { deleteProductRouter } from './routes/delete-product';
 import { createReviewRouter } from './routes/create-review';
@@ -18,19 +16,7 @@ import { getProductRouter } from './routes/get-product';
 import { bestsellerRouter } from './routes/best-seller';
 import { uploadImageRouter } from './routes/upload-images';
 import { getSellerProductsRouter } from './routes/get-product-by-seller';
-const WINDOW_TIME=15*60*1000; // 15 mins
-const MAX_REQ=30;
-const limiter=rateLimit({
-  windowMs:WINDOW_TIME,
-  max:MAX_REQ,
-  standardHeaders: true, 
-	legacyHeaders: false,
-  message:JSON.stringify(
-    [{
-      message:"Too many requests , Try after 15 mins"
-    }]
-    ) 
-  })
+
 const app = express();
 app.set('trust proxy', true);
 app.use(express.json());
@@ -57,7 +43,6 @@ app.use(deleteProductRouter);
 app.use(createReviewRouter);
 app.use(deleteReviewRouter);
 app.use(getProductRouter);
-app.use(limiter);
 app.use(updateProductRouter);
 
 app.all('*', async () => {
