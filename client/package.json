@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "proxy": "https://karkaushal.dev",
+  "proxy": "http://karkaushal.in",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
