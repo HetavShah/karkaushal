@@ -15,6 +15,14 @@ spec:
       containers:
         - name: payment-mongo
           image: mongo
+          args: ['--dbpath', '/data/db']
+          volumeMounts:
+            - name: 'mongo-data-dir'
+              mountPath: '/data/db'
+      volumes:
+        - name: 'mongo-data-dir'
+          persistentVolumeClaim:
+            claimName: 'payment-mongo-pvc'
 ---
 apiVersion: v1
 kind: Service
