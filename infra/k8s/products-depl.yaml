@@ -13,24 +13,31 @@ spec:
         app: products
     spec:  
       containers:
-      - name: products
-        image: hetavshah/products-karkaushal
-        env:
-          - name: MONGO_URI
-            value: 'mongodb://products-mongo-srv:27017/products'
-          - name: JWT_KEY
-            valueFrom:
-              secretKeyRef:
-                name: jwt-secret
-                key: JWT_KEY
-          - name: NATS_CLIENT_ID
-            valueFrom:
-              fieldRef:
-                fieldPath:  metadata.name 
-          - name: NATS_URL
-            value: 'http://nats-srv:4222'
-          - name: NATS_CLUSTER_ID
-            value: karkaushal
+        - name: products
+          image: hetavshah/products-karkaushal
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://products-mongo-srv:27017/products'
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath:  metadata.name 
+            - name: NATS_URL
+              value: 'http://nats-srv:4222'
+            - name: NATS_CLUSTER_ID
+              value: karkaushal
+          volumeMounts:
+            - name: 'image-upload-dir'
+              mountPath: '/app/uploads'
+      volumes:
+        - name: 'image-upload-dir'
+          persistentVolumeClaim:
+            claimName: 'image-upload-pvc'
 
 ---
 
