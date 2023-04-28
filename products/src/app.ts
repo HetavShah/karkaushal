@@ -57,7 +57,8 @@ app.use(deleteProductRouter);
 app.use(createReviewRouter);
 app.use(deleteReviewRouter);
 app.use(getProductRouter);
-app.use(limiter,updateProductRouter);
+app.use(limiter);
+app.use(updateProductRouter);
 
 app.all('*', async () => {
   throw new NotFoundError();
