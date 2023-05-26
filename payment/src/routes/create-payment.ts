@@ -21,10 +21,14 @@ requireAuth,
   body('orderId')
   .not()
   .isEmpty()
-  .withMessage("Order Id is required") 
+  .withMessage("Order Id is required"),
+  body("tokenId")
+  .not()
+  .isEmpty()
+  .withMessage("token is required")
 ],validateRequest,
 async (req:Request, res:Response)=>{
-    const {orderId}=req.body;
+    const {orderId,tokenId}=req.body;
     const order=await Order.findById(orderId);
     
     if(!order){throw new NotFoundError()};
@@ -40,6 +44,8 @@ async (req:Request, res:Response)=>{
       amount: order.totalPrice*100,
       currency: 'inr',
       payment_method_types: ['card'],
+      confirm:true,
+      payment_method:tokenId
     });
     if(!paymentIntent.id) throw new Error("Payment Failed");
     const payment=Payment.build({

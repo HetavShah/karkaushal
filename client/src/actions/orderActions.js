@@ -105,7 +105,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
 };
 
 export const payOrder =
-  (orderId, paymentResult) => async (dispatch, getState) => {
+  (orderId, token) => async (dispatch, getState) => {
 
     try {
      
@@ -117,7 +117,8 @@ export const payOrder =
       
 
       const { data } = await axios.post('/api/payments', {
-        orderId
+       orderId: orderId,
+       tokenId:token.id
       });
 
       

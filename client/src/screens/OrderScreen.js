@@ -52,29 +52,6 @@ const OrderScreen = ({}) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const handleToken = async (token, amount) => {
-    try {
-      console.log(amount);
-      const res = await axios.post('/api/payments', {
-        orderId: order.id,
-      });
-      const { id } = res.data;
-      console.log(res.data);
-      if (id) {
-        toast('Success ! Check emails for details', {
-          type: 'success',
-        });
-      } else {
-        toast('Something went wrong', {
-          type: 'failure',
-        });
-      }
-    } catch (err) {
-      toast('Something went wrong', {
-        type: 'failure',
-      });
-    }
-  };
 
   if (!loading) {
     //   Calculate prices
@@ -119,9 +96,9 @@ const OrderScreen = ({}) => {
     dispatch(deliverOrder(order));
   };
 
-  const successPaymentHandler = (paymentResult) => {
-    console.log(paymentResult);
-    dispatch(payOrder(id, paymentResult));
+  const handleToken = (token) => {
+    console.log(token);
+    dispatch(payOrder(id, token));
   };
 
   if (timeLeft < 0) {
@@ -238,7 +215,7 @@ const OrderScreen = ({}) => {
                   {loadingPay && <Loader />}
 
                   <StripeCheckout
-                    token={successPaymentHandler}
+                    token={handleToken}
                     stripeKey="pk_test_JMdyKVvf8EGTB0Fl28GsN7YY"
                     amount={order.totalPrice * 100}
                     email={userInfo.email}
