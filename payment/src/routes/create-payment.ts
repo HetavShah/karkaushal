@@ -40,15 +40,18 @@ async (req:Request, res:Response)=>{
       throw new BadRequestError('Can not pay for an cancelled order');
     }
     
-    const charge = await stripe.charges.create({
-      amount: order.totalPrice*100,
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: Math.ceil(order.totalPrice*100),
       currency: 'INR',
-      source:token.id
     });
-    if(!charge.id) throw new Error("Payment Failed");
+    if(!paymentIntent.id) throw new Error("Payment Intent creation Failed");
+    const confirmPaymentIntent=await stripe.paymentIntents.confirm(paymentIntent.id,{
+      payment_method:"pm_card_amex_threeDSecureNotSupported"
+    });
+    // console.log(confirmPaymentIntent);
     const payment=Payment.build({
       orderId,
-      stripeId:charge.id
+      stripeId:paymentIntent.id
     })
     await payment.save();
     new PaymentCreatedPublisher(natsWrapper.client).publish({
@@ -56,7 +59,7 @@ async (req:Request, res:Response)=>{
       orderId:payment.orderId,
       stripeId:payment.stripeId
     });
-    res.status(201).send({id:payment.id});
+    res.status(201).send({paymentIntent:paymentIntent.id});
 });
 
 export {router as CreateChargeRouter }
