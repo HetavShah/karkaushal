@@ -117,8 +117,8 @@ export const payOrder =
       
 
       const { data } = await axios.post('/api/payments', {
-       orderId: orderId,
-       tokenId:token.id
+      orderId,
+       token
       });
 
       

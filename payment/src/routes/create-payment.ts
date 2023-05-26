@@ -22,13 +22,13 @@ requireAuth,
   .not()
   .isEmpty()
   .withMessage("Order Id is required"),
-  body("tokenId")
+  body("token")
   .not()
   .isEmpty()
   .withMessage("token is required")
 ],validateRequest,
 async (req:Request, res:Response)=>{
-    const {orderId,tokenId}=req.body;
+    const {orderId,token}=req.body;
     const order=await Order.findById(orderId);
     
     if(!order){throw new NotFoundError()};
@@ -40,17 +40,15 @@ async (req:Request, res:Response)=>{
       throw new BadRequestError('Can not pay for an cancelled order');
     }
     
-    const paymentIntent = await stripe.paymentIntents.create({
+    const charge = await stripe.charges.create({
       amount: order.totalPrice*100,
-      currency: 'inr',
-      payment_method_types: ['card'],
-      confirm:true,
-      payment_method:tokenId
+      currency: 'INR',
+      source:token.id
     });
-    if(!paymentIntent.id) throw new Error("Payment Failed");
+    if(!charge.id) throw new Error("Payment Failed");
     const payment=Payment.build({
       orderId,
-      stripeId:paymentIntent.id
+      stripeId:charge.id
     })
     await payment.save();
     new PaymentCreatedPublisher(natsWrapper.client).publish({
