@@ -42,7 +42,7 @@ kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<YOUR SECRET>
 ```
 #### STRIPE_KEY : 
 ``` javascript
-kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<YOUR SECRET>
+kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=<YOUR STRIPE SECRET KEY>
 ```
 ## Screenshots
 
@@ -62,6 +62,7 @@ kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<YOUR SECRET>
 - Mark orders as a delivered option for the seller
 - Make a product review and rating and calculate a new rating instantly
 - Implement an Optimistic concurrency control concept with Mongoose to handle concurrency issues with event flow
+- Created an expiration timer for payment completion during which the order gets reserved for a user
 
 
 ## Usage/Examples
@@ -83,3 +84,25 @@ Pay with Stripe method (recommended)
 - Go to product page
 - Create new product
 - Update product details 
+
+## Tech Stack
+
+### Backend 
+
+- NodeJS
+- Typescript
+- MongoDB
+- ExpressJS
+
+### Frontend 
+
+- ReactJS
+- Redux
+- Javascript
+
+### CI/CD 
+
+- Docker
+- Kubernetes
+- Github Actions
+- GCP (GKE)

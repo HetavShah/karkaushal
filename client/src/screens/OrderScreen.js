@@ -215,10 +215,14 @@ const OrderScreen = ({}) => {
                   {loadingPay && <Loader />}
 
                   <StripeCheckout
+                    image="../../public/Project.ico"
+                    name="KarKaushal"
+                    description="E-commerce Platform"
                     token={handleToken}
                     stripeKey="pk_test_JMdyKVvf8EGTB0Fl28GsN7YY"
                     amount={order.totalPrice * 100}
                     email={userInfo.email}
+                    currency="INR"
                   />
                 </ListGroup.Item>
               )}
