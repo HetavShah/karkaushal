@@ -215,7 +215,7 @@ const OrderScreen = ({}) => {
                   {loadingPay && <Loader />}
 
                   <StripeCheckout
-                    image="../../public/Project.ico"
+                    image="/Project.jpg"
                     name="KarKaushal"
                     description="E-commerce Platform"
                     token={handleToken}
