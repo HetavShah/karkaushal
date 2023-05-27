@@ -29,4 +29,4 @@ spec:
       port: 3000
       targetPort: 3000      
       
-# Sample to start gke cluster v3
+# Sample to start gke cluster v4
