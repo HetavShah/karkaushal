@@ -34,16 +34,6 @@ const PaymentScreen = ({ history }) => {
           <Form.Label as="legend">Select Method</Form.Label>
           <Col>
             <Form.Check
-              value="COD"
-              type="radio"
-              aria-label="radio 2"
-              label="Cash On Deliery"
-              checked={paymentMethod === "COD"}
-              onChange={(e) => {
-                setPaymentMethod(e.target.value);
-              }}
-            ></Form.Check>
-            <Form.Check
               value="Stripe"
               type="radio"
               label="Stripe"
