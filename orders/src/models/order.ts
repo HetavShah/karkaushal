@@ -93,7 +93,9 @@ const orderSchema = new mongoose.Schema<OrderDoc,OrderModel>(
         qty: { type: Number, required: true },
         price: { type: Number, required: true },
         productId: { type: String, required: true },
-        sellerId:{type:String,required:true},
+        sellerId:{type:String,required:true,index:{
+          type:'hashed'
+        }},
         product: {
           type: mongoose.Schema.Types.ObjectId,
           ref: 'Product',
@@ -154,7 +156,9 @@ const orderSchema = new mongoose.Schema<OrderDoc,OrderModel>(
     timestamps: true,
   }
 );
-
+orderSchema.index({
+  userId:'hashed'
+})
 orderSchema.set('versionKey', 'version');
 
 // @ts-ignore

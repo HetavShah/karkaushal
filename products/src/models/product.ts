@@ -67,7 +67,12 @@ const productSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
+productSchema.index({
+  title: 'text',
+})
+productSchema.index({
+  userId:'hashed'
+})
 productSchema.set('versionKey', 'version');
 
 productSchema.plugin(updateIfCurrentPlugin);
