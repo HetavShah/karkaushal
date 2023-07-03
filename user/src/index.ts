@@ -1,4 +1,5 @@
 import { app } from './app';
+import { metricsService } from './services/monitor';
 import mongoose from 'mongoose';
 const  start = async() => {
   console.log("Starting....User..");
@@ -23,6 +24,7 @@ const  start = async() => {
   app.listen(3000, () => {
     console.log(' User service listening on port 3000.');
     });
+    metricsService();
 };
 
 start();

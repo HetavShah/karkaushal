@@ -10,6 +10,14 @@ spec:
     - host: karkaushal.dev
       http:
         paths:
+          - path: /users/metrics
+            pathType: Prefix
+            backend:
+              service:
+                name: user-srv
+                port:
+                  number: 9000
+                  
           - path: /api/users/?(.*)
             pathType: Prefix
             backend:

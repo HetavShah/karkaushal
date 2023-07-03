@@ -37,3 +37,7 @@ spec:
     protocol: TCP
     port: 3000
     targetPort: 3000
+  - name: monitor
+    protocol: TCP
+    port: 9000
+    targetPort: 9000
