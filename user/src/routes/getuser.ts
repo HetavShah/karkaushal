@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import { databseResponseTimeHistogram } from '../services/monitor';
 import {
   currentUser,
   NotAuthorizedError,
@@ -21,8 +22,14 @@ router.get(
     if (req.currentUser?.id !== req.params.userId) {
       throw new NotAuthorizedError();
     }
+    const metricsLabels={
+      operation:'find-user'
+    }
 
+    const timer=databseResponseTimeHistogram.startTimer();
     const user = await User.findOne({ id: req.currentUser?.id });
+
+    timer({...metricsLabels,success:'true'});
     if (!user) {
       throw new NotFoundError();
     }

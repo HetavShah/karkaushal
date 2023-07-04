@@ -5,6 +5,7 @@ import { ProductCreatedListener } from './events/listeners/product-created-liste
 import { ProductUpdatedListener } from './events/listeners/product-updated-listener';
 import { ExpirationCompletedListener } from './events/listeners/expiration-completed-listener';
 import { PaymentCreatedListener } from './events/listeners/payment-created-listener';
+import { metricsService } from './service/monitor';
 const start=async ()=>{
 console.log("Starting Orders....");
   if(!process.env.JWT_KEY)
@@ -62,6 +63,7 @@ console.log("Starting Orders....");
   app.listen(3000, () => {
     console.log('Listening on port 3000.');
     }); 
+    metricsService();
 };
 
 start();

@@ -9,15 +9,7 @@ spec:
   rules:
     - host: karkaushal.dev
       http:
-        paths:
-          - path: /users/metrics
-            pathType: Prefix
-            backend:
-              service:
-                name: user-srv
-                port:
-                  number: 9000
-                  
+        paths:        
           - path: /api/users/?(.*)
             pathType: Prefix
             backend:
@@ -44,6 +36,13 @@ spec:
             backend:
               service:
                 name: products-srv
+                port:
+                  number: 3000
+          - path: /monitor/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: monitor-srv
                 port:
                   number: 3000
           - path: /api/orders/?(.*)

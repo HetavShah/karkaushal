@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { Gender, User, UserAttrs } from '../models/user';
 import { BadRequestError, validateRequest } from '@karkaushal/common';
+import { databseResponseTimeHistogram } from '../services/monitor';
 import jwt from 'jsonwebtoken';
 const router = express.Router();
 router.post(
@@ -88,8 +89,15 @@ router.post(
         });
 
       }
+
+      const metricsLabels={
+        operation:'create-user'
+      }
+      const timer=databseResponseTimeHistogram.startTimer();
    
     await user.save();
+
+    timer({...metricsLabels,success:'true'});
     // console.log(user.isSeller);
 
     // Generate token

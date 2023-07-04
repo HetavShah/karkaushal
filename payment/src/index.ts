@@ -3,6 +3,7 @@ import {app} from './app';
 import { natsWrapper } from "../NatsWrapper";
 import { OrderCreatedListener } from './events/listeners/order-created-listener';
 import { OrderUpdatedListener } from './events/listeners/order-updated-listener';
+import { metricsService } from './service/monitor';
 const start=async ()=>{
   console.log("starting payments...");
 
@@ -60,6 +61,7 @@ const start=async ()=>{
   app.listen(3000, () => {
     console.log('Listening on port 3000.');
     }); 
+    metricsService();
 };
 
 start();
