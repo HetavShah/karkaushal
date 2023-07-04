@@ -8,9 +8,9 @@ const port = 3000;
 app.get('/monitor/scrap', async (req: Request, res: Response) => {
   try {
     const userMetric = await axios.get('http://user-srv:9000/metrics');
-    const productMetric = await axios.get('http://product-srv:9000/metrics');
+    const productMetric = await axios.get('http://products-srv:9000/metrics');
     const paymentMetric = await axios.get('http://payment-srv:9000/metrics'); 
-    const orderMetric = await axios.get('http://order-srv:9000/metrics'); 
+    const orderMetric = await axios.get('http://orders-srv:9000/metrics'); 
     const allMetrics = { 
     'user-service': userMetric.data,
     'payment-service': paymentMetric.data,
