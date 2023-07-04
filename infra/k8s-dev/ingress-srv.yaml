@@ -45,6 +45,7 @@ spec:
                 name: monitor-srv
                 port:
                   number: 3000
+                  
           - path: /api/orders/?(.*)
             pathType: Prefix
             backend:
