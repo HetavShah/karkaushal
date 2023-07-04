@@ -11,14 +11,12 @@ app.get('/monitor/scrap', async (req: Request, res: Response) => {
     const productMetric = await axios.get('http://product-srv:9000/metrics');
     const paymentMetric = await axios.get('http://payment-srv:9000/metrics'); 
     const orderMetric = await axios.get('http://order-srv:9000/metrics'); 
-    // console.log(userMetric)
     const allMetrics = { 
     'user-service': userMetric.data,
     'payment-service': paymentMetric.data,
     'order-service': orderMetric.data,
     'product-service':productMetric.data  
   };
-    // console.log(allMetrics);
     res.status(200).send(allMetrics);
   } catch (err) {
     console.log(err);
