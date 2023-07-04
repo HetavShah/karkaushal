@@ -93,9 +93,7 @@ const orderSchema = new mongoose.Schema<OrderDoc,OrderModel>(
         qty: { type: Number, required: true },
         price: { type: Number, required: true },
         productId: { type: String, required: true },
-        sellerId:{type:String,required:true,index:{
-          type:'hashed'
-        }},
+        sellerId:{type:String,required:true},
         product: {
           type: mongoose.Schema.Types.ObjectId,
           ref: 'Product',
