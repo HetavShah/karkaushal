@@ -17,7 +17,7 @@ jobs:
      steps:
      # Create docker image and push it to Dockerhub with Credentials
        - uses: actions/checkout@v2
-       - run: cd products && docker build -t hetavshah/monitor .
+       - run: cd monitor && docker build -t hetavshah/monitor .
        - run : docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
          env: 
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
