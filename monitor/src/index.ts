@@ -26,6 +26,10 @@ app.get('/monitor/scrap', async (req: Request, res: Response) => {
   }
 });
 
+app.get('/monitor/dashboard',async(req,res)=>{
+  
+})
+
 app.listen(port,()=>{
 console.log("Monitoring service started on port " + port);
 });

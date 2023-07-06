@@ -1,0 +1,12 @@
+prometheus:
+  alertmanager:
+    enabled: false
+  pushgateway:
+    enabled: false
+  nodeExporter:
+    enabled: false
+
+
+grafana:
+  ingress:
+    enabled: true
