@@ -52,7 +52,7 @@ spec:
                 name: monitor-srv
                 port:
                   number: 3000
-          - path: /monitor/grafana
+          - path: /monitor/grafana/?(.*)
             pathType: Prefix
             backend:
               service:
