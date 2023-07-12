@@ -8,6 +8,9 @@ Karkaushal is an  e-commerce website for the people who sells handicraft product
 
 www.karkaushal.in
 
+## Video Demo
+https://youtu.be/LIB7HfItkvE
+
 ## Software Architecture
 
 ![App Screenshot](./documentation/softwareArch.png)
@@ -50,6 +53,9 @@ kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=<YOUR STRI
 ![App Screenshot](./documentation/homePage.png)
 ![App Screenshot](./documentation/productPage.png)
 ![App Screenshot](./documentation/paymentPage.png)
+
+### Backend (Events)
+![App Screenshot](./documentation/events.png)
 
 ### CI/CD
 ![App Screenshot](./documentation/grafanaDashboard.png)
