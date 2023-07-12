@@ -8,5 +8,7 @@ prometheus:
 
 
 grafana:
+  server:
+    root_url:https://www.karkaushal.in/monitor/grafana
   ingress:
     enabled: true
