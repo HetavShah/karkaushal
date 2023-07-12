@@ -45,20 +45,13 @@ spec:
                 name: products-srv
                 port:
                   number: 3000
-          - path: /monitor/scrap
+          - path: /monitor/?(.*)
             pathType: Prefix
             backend:
               service:
                 name: monitor-srv
                 port:
                   number: 3000
-          - path: /monitor/grafana/?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: express-monitor-grafana
-                port:
-                  number: 80
           - path: /api/orders/?(.*)
             pathType: Prefix
             backend:

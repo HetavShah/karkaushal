@@ -27,7 +27,7 @@ app.get('/monitor/scrap', async (req: Request, res: Response) => {
 });
 
 app.get('/monitor/dashboard',async(req,res)=>{
-  
+  res.redirect('http://34.67.43.134/d/PTSqcpJWk/nodejs-application-dashboard?orgId=1&from=1689180582765&to=1689184182765');
 })
 
 app.listen(port,()=>{
