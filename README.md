@@ -99,10 +99,6 @@ Pay with Stripe method (recommended)
 ### How to access monitor endpoints
 - Go to ```www.karkaushal.in/monitor/scrap``` to get the api monitoring information
 - Go to ```www.karkaushal.in/monitor/dashboard``` to access the grafana dashboard
-``` javascript 
-Grafana userid : admin 
-Grafana password: 0mQbbrGEjHlDYaiWVKJMZU5tdvx4ALLBXnFm8454
-```
 
 
 

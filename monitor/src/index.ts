@@ -27,8 +27,8 @@ app.get('/monitor/scrap', async (req: Request, res: Response) => {
 });
 
 app.get('/monitor/dashboard',async(req,res)=>{
-  res.redirect('http://34.67.43.134/d/PTSqcpJWk/nodejs-application-dashboard?orgId=1&from=1689180582765&to=1689184182765');
-})
+  res.redirect('https://snapshots.raintank.io/dashboard/snapshot/TFhPEWAmO9lcwC7x39FqAe9esJz9hu0V');
+});
 
 app.listen(port,()=>{
 console.log("Monitoring service started on port " + port);
