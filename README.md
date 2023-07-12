@@ -46,10 +46,15 @@ kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=<YOUR STRI
 ```
 ## Screenshots
 
+### UI
 ![App Screenshot](./documentation/homePage.png)
 ![App Screenshot](./documentation/productPage.png)
 ![App Screenshot](./documentation/paymentPage.png)
 
+### CI/CD
+![App Screenshot](./documentation/grafanaDashboard.png)
+![App Screenshot](./documentation/gcloud1.png)
+![App Screenshot](./documentation/gcloud2.png)
 
 ## Features
 
@@ -63,7 +68,7 @@ kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=<YOUR STRI
 - Make a product review and rating and calculate a new rating instantly
 - Implement an Optimistic concurrency control concept with Mongoose to handle concurrency issues with event flow
 - Created an expiration timer for payment completion during which the order gets reserved for a user
-
+- Implemented Monitoring endpoints to measure api performance and server performance.
 
 ## Usage/Examples
 
@@ -84,6 +89,16 @@ Pay with Stripe method (recommended)
 - Go to product page
 - Create new product
 - Update product details 
+
+### How to access monitor endpoints
+- Go to ```www.karkaushal.in/monitor/scrap``` to get the api monitoring information
+- Go to ```www.karkaushal.in/monitor/dashboard``` to access the grafana dashboard
+``` javascript 
+Grafana userid : admin 
+Grafana password: 0mQbbrGEjHlDYaiWVKJMZU5tdvx4ALLBXnFm8454
+```
+
+
 
 ## Tech Stack
 
@@ -106,3 +121,7 @@ Pay with Stripe method (recommended)
 - Kubernetes
 - Github Actions
 - GCP (GKE)
+
+### Monitoring
+- Prometheus
+- Grafana
