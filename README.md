@@ -6,7 +6,7 @@
 Karkaushal is an  e-commerce website for the people who sells handicraft product built with microservices architecture, developing on docker-desktop and Deployed on the Google Cloud Platform (Google Kuberenetes Engine) environment, integrated some CI/CD process with GitHub Action workflow.
 ## Demo
 
-www.karkaushal.in
+www.karkaushal.in ( *** FREE CREDITS OF GCP ARE OVER. RIP...........****)
 
 ## Video Demo
 https://youtu.be/LIB7HfItkvE
